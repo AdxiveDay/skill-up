@@ -46,7 +46,7 @@ export default function LessonPage() {
             <div className="flex flex-col gap-8">
               <p className="text-[#ACACAC] text-[0.8rem]">OVERVIEW</p>
               <div className="flex gap-2">
-                <img className="w-6" src="/homenormal.png" />
+                <img className="w-6" src="/Homenormal.png" />
                 <li><a href="/">Dashboard</a></li>
               </div>
               <div className="flex gap-2">

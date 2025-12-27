@@ -71,9 +71,9 @@ export default function CreateLessonPage() {
         <option value="Chem">Chem</option>
       </select>
 
-      <input type="file" accept="image/*" onChange={(e) => setCover(e.target.files?.[0] || null)} />
+      <input placeholder="Cover" type="file" accept="image/*" onChange={(e) => setCover(e.target.files?.[0] || null)} />
 
-      <input type="file" accept="application/pdf" onChange={(e) => setPdf(e.target.files?.[0] || null)} />
+      <input placeholder="PDFfile" type="file" accept="application/pdf" onChange={(e) => setPdf(e.target.files?.[0] || null)} />
 
       <button onClick={handleSubmit} disabled={loading}>
         {loading ? "Saving..." : "Create"}

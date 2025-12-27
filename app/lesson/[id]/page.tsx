@@ -88,7 +88,7 @@ export default function LessonDetailPage() {
                 </div>
                 <div className="w-[220px] mt-30 mr-16">
                     <div className="w-full p-6 py-4 h-[269px] bg-white rounded-2xl">
-                        <h1>Profile</h1>
+                        <h1>Writter</h1>
                         <div className="flex flex-col items-center">
                             <img className="w-24 object-cover rounded-full h-24 mt-6 mb-4" src="/no-profile.jpg" />
                             <h1>{lesson.createdBy.username}</h1>

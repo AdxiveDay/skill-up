@@ -140,12 +140,12 @@ export default function HomePage() {
             <div className="flex flex-row gap-6 items-center xl:flex-col xl:gap-8 xl:items-start xl:mt-0">
               <p className="hidden xl:block text-[#ACACAC] text-[0.8rem]">OVERVIEW</p>
 
-              <div className="flex gap-2 items-center">
+              <div onClick={() => router.push("/")} className="flex cursor-pointer gap-2 items-center">
                 <img className="w-6" src="/homepur.png" />
                 <li><a href="/" className="text-sm xl:text-base">Dashboard</a></li>
               </div>
 
-              <div className="flex gap-2 items-center">
+              <div onClick={() => router.push("/lesson")} className="flex cursor-pointer gap-2 items-center">
                 <img className="w-6" src="/lesson.png" />
                 <li><a href="/lesson" className="text-sm xl:text-base">Lesson</a></li>
               </div>
@@ -163,7 +163,7 @@ export default function HomePage() {
                 <img className="w-6" src="/Setting.png" />
                 <li><a href="/">Setting</a></li>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 cursor-pointer">
                 <img className="w-6" src="/logout.png" />
                 <li>
                   <a className="text-[#E94444] cursor-pointer" onClick={async () => {

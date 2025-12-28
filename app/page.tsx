@@ -175,7 +175,7 @@ export default function HomePage() {
         </nav>
 
         {/* 2. Middle Content (Banner ซ้าย) */}
-        <div className="w-full px-4 md:w-[65%] xl:w-[739px] mt-8 flex flex-col items-center">
+        <div className="w-full px-4 md:w-[65%] md:ml-5 xl:w-[739px] mt-8 flex flex-col items-center">
           <input
             placeholder="Find your lesson.."
             type="text"

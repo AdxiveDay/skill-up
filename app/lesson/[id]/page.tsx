@@ -97,7 +97,8 @@ export default function LessonDetailPage() {
                 {/* Content Area: กลับมาใช้ w-[820px] ในจอ Laptop เหมือนเดิม */}
                 <div className="w-full xl:w-[820px] mt-24 xl:mt-10">
                     <iframe
-                        src={`${lesson.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                        // src={`${lesson.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+                        src={lesson.pdfUrl}
                         className="w-full h-[60vh] xl:h-[90vh] border rounded-xl bg-white"
                     />
                 </div>

@@ -116,6 +116,7 @@ export default function LessonPage() {
               <option value="Math">Math</option>
               <option value="Bio">Biology</option>
               <option value="Chemistry">Chemistry</option>
+              <option value="History">History</option>
             </select>
           </div>
 

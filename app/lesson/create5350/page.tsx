@@ -69,11 +69,18 @@ export default function CreateLessonPage() {
         <option value="Math">Math</option>
         <option value="Bio">Bio</option>
         <option value="Chem">Chem</option>
+        <option value="History">History</option>
       </select>
 
-      <input placeholder="Cover" type="file" accept="image/*" onChange={(e) => setCover(e.target.files?.[0] || null)} />
+      <div className="flex flex-col">
+        <h1>อัปโหลดหน้าปก (กว้าง 260 x สูง 165)</h1>
+        <input placeholder="Cover" type="file" accept="image/*" onChange={(e) => setCover(e.target.files?.[0] || null)} />
+      </div>
 
-      <input placeholder="PDFfile" type="file" accept="application/pdf" onChange={(e) => setPdf(e.target.files?.[0] || null)} />
+      <div className="flex flex-col">
+        <h1>อัปโหลด PDF</h1>
+        <input placeholder="PDFfile" type="file" accept="application/pdf" onChange={(e) => setPdf(e.target.files?.[0] || null)} />
+      </div>
 
       <button onClick={handleSubmit} disabled={loading}>
         {loading ? "Saving..." : "Create"}

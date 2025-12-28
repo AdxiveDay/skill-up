@@ -60,12 +60,12 @@ export default function LessonDetailPage() {
                             <p className="hidden xl:block text-[#ACACAC] text-[0.8rem]">OVERVIEW</p>
 
                             <div className="flex gap-2 items-center">
-                                <img className="w-6" src="/homepur.png" />
+                                <img className="w-6" src="/Homenormal.png" />
                                 <li><a href="/" className="text-sm xl:text-base">Dashboard</a></li>
                             </div>
 
                             <div className="flex gap-2 items-center">
-                                <img className="w-6" src="/lesson.png" />
+                                <img className="w-6" src="/lessonpurple.png" />
                                 <li><a href="/lesson" className="text-sm xl:text-base">Lesson</a></li>
                             </div>
 
@@ -100,7 +100,6 @@ export default function LessonDetailPage() {
                                 router.push("/login");
                             }}>Logout</a>
                         </div>
-
                     </ul>
                 </nav>
 

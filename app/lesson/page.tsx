@@ -51,7 +51,7 @@ export default function LessonPage() {
               </div>
               <div className="flex gap-2">
                 <img className="w-6" src="/lessonpurple.png" />
-                <li><a className="text-[#5E17EB]" href="/lesson">Lesson</a></li>
+                <li><a href="/lesson">Lesson</a></li>
               </div>
               <div className="flex gap-2">
                 <img className="w-6" src="/task.png" />

@@ -38,6 +38,13 @@ export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
+  const [stats, setStats] = useState({
+    memberCount: 0,
+    lessonCount: 0,
+    typeCount: 0,
+  });
+
+
   const fetchMe = async () => {
     try {
       const res = await fetch("/api/me", { cache: "no-store" });
@@ -83,7 +90,17 @@ export default function HomePage() {
     return () => clearInterval(interval);
   }, []);
 
+  const fetchStats = async () => {
+    const res = await fetch("/api/stats", { cache: "no-store" });
+    if (res.ok) {
+      const data = await res.json();
+      setStats(data);
+    }
+  };
 
+  useEffect(() => {
+    fetchStats();
+  }, []);
 
   useEffect(() => {
     async function fetchMe() {
@@ -190,6 +207,43 @@ export default function HomePage() {
               src="Robot.png"
               className="absolute animate-size-loop w-[70%] max-w-[534px] left-[45%] top-[-15%] xl:w-[534px] xl:h-[322px] xl:ml-[22rem] xl:mt-[-3.5rem] xl:left-0 xl:top-0"
             />
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-4 md:gap-3 xl:gap-6 mt-4 w-full md:w-auto">
+
+            {/* Member Card */}
+            <div className="bg-white items-center p-4 gap-4 flex w-full md:w-[180px] xl:w-[220px] h-[90px] md:h-[100px] rounded-3xl">
+              <div className="bg-[#F0E9FD] w-[45px] h-[45px] xl:w-[57px] xl:h-[57px] flex shrink-0 rounded-full items-center justify-center">
+                <img className="w-5 xl:w-8" src="/member.png" />
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-[#B6B6B6] text-[0.7rem] xl:text-[0.8rem]">Member</h1>
+                <h1 className="text-[1.2rem] xl:text-[1.5rem] font-semibold">{stats.memberCount.toLocaleString()}</h1>
+              </div>
+            </div>
+
+            {/* Lesson Card */}
+            <div className="bg-white items-center p-4 gap-4 flex w-full md:w-[180px] xl:w-[220px] h-[90px] md:h-[100px] rounded-3xl">
+              <div className="bg-[#F0E9FD] w-[45px] h-[45px] xl:w-[57px] xl:h-[57px] flex shrink-0 rounded-full items-center justify-center">
+                <img className="w-5 xl:w-8" src="/lessons.png" />
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-[#B6B6B6] text-[0.7rem] xl:text-[0.8rem]">Lesson</h1>
+                <h1 className="text-[1.2rem] xl:text-[1.5rem] font-semibold">{stats.lessonCount.toLocaleString()}</h1>
+              </div>
+            </div>
+
+            {/* Subject Card */}
+            <div className="bg-white items-center p-4 gap-4 flex w-full md:w-[180px] xl:w-[220px] h-[90px] md:h-[100px] rounded-3xl">
+              <div className="bg-[#F0E9FD] w-[45px] h-[45px] xl:w-[57px] xl:h-[57px] flex shrink-0 rounded-full items-center justify-center">
+                <img className="w-5 xl:w-8" src="/fulter.png" />
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-[#B6B6B6] text-[0.7rem] xl:text-[0.8rem]">Subject</h1>
+                <h1 className="text-[1.2rem] xl:text-[1.5rem] font-semibold">{stats.typeCount.toLocaleString()}</h1>
+              </div>
+            </div>
+
           </div>
 
           <div className="mt-8 w-full flex flex-col gap-8">

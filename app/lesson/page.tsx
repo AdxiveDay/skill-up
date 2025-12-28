@@ -10,6 +10,7 @@ type Lesson = {
   type: string;
   coverUrl: string;
   pdfUrl: string;
+  visitCount: number; // ✅ เพิ่ม
   createdBy: {
     username: string;
   };
@@ -136,9 +137,13 @@ export default function LessonPage() {
                   <h1 className="break-words font-semibold text-lg">{lesson.title}</h1>
                   <div className="flex mt-auto pt-4 gap-3">
                     <img src="no-profile.jpg" className="w-10 h-10 rounded-full" />
-                    <div className="flex flex-col">
-                      <h1 className="text-sm font-bold">{lesson.createdBy.username}</h1>
-                      <h1 className="text-[#CDCDCD] text-[0.7rem] line-clamp-1">{lesson.bio}</h1>
+                    <div className="flex items-center w-full justify-between">
+                      <div className="flex flex-col">
+                        <h1 className="text-sm font-bold">{lesson.createdBy.username}</h1>
+                        <h1 className="text-[#CDCDCD] text-[0.7rem] line-clamp-1">{lesson.bio}</h1>
+                      </div>
+                      {/* ส่วนใส่ จำนวนเข้าชม */}
+                      <h1 className="text-[0.7rem] text-[#CDCDCD] mr-2">{(lesson.visitCount ?? 0).toLocaleString()} visits</h1>
                     </div>
                   </div>
                 </div>

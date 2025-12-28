@@ -19,6 +19,7 @@ export default function LessonDetailPage() {
     const params = useParams();
     const [lesson, setLesson] = useState<Lesson | null>(null);
     const router = useRouter()
+    
 
     useEffect(() => {
         fetch(`/api/lesson/${params.id}`)
@@ -105,7 +106,7 @@ export default function LessonDetailPage() {
                 <div className="w-full xl:w-[220px] mt-8 mb-8 xl:mb-0 xl:mt-30 xl:mr-16">
                     <div className="w-full p-6 py-4 h-auto xl:h-[269px] bg-white rounded-2xl flex flex-row xl:flex-col justify-between items-center xl:justify-start">
                         <div className="text-left xl:w-full">
-                            <h1 className="text-gray-400 xl:text-[#333333]">Writer</h1>
+                            <h1 className="text-gray-400 xl:text-[#333333]">Writter</h1>
                         </div>
 
                         <div className="flex flex-row xl:flex-col items-center gap-4 xl:gap-0">

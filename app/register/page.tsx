@@ -68,7 +68,7 @@ export default function RegisterPage() {
 
     return (
         <div className="bg-[url('/Newppbg.png')] bg-cover bg-center flex justify-center items-center h-screen">
-            <div className="bg-white rounded-3xl w-[414px] h-[535px]">
+            <div className="bg-white rounded-3xl w-[370px] md:w-[414px] h-auto min-h-[480px] pb-10 shadow-lg">
 
                 <div className="flex pt-10 flex-col gap-3 items-center">
                     <div className="flex items-center gap-2">

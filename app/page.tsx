@@ -130,40 +130,32 @@ export default function HomePage() {
         {/* 1. Navbar (Top on Mobile/iPad, Left on Laptop) */}
         <nav className="fixed left-0 top-0 z-50 bg-white w-full h-16 px-6 flex items-center xl:px-0 xl:pl-8 xl:py-2 xl:w-[254px] xl:h-screen xl:block">
           <ul className="flex flex-row items-center justify-between w-full xl:flex-col xl:items-start xl:justify-start xl:w-auto">
-
-            {/* LOGO: ซ่อนในจอเล็ก (hidden) กลับมาโชว์ใน Laptop (xl:block) */}
-            <div className="hidden xl:block">
+            <div onClick={() => router.push("/")} className="hidden xl:block cursor-pointer duration-200 hover:scale-105 transition-transform">
               <img className="w-44 animate-pulse" src="/Skillup.png" />
             </div>
-
-            {/* OVERVIEW SECTION: จอเล็กเรียง flex-row / Laptop เรียง flex-col gap-8 เหมือนเดิม */}
             <div className="flex flex-row gap-6 items-center xl:flex-col xl:gap-8 xl:items-start xl:mt-0">
               <p className="hidden xl:block text-[#ACACAC] text-[0.8rem]">OVERVIEW</p>
-
-              <div onClick={() => router.push("/")} className="flex cursor-pointer gap-2 items-center">
+              <div onClick={() => router.push("/")} className="flex duration-200 hover:scale-105 transition-transform cursor-pointer gap-2 items-center">
                 <img className="w-6" src="/homepur.png" />
                 <li><a href="/" className="text-sm xl:text-base">Dashboard</a></li>
               </div>
-
-              <div onClick={() => router.push("/lesson")} className="flex cursor-pointer gap-2 items-center">
+              <div onClick={() => router.push("/lesson")} className="flex duration-200 hover:scale-105 cursor-pointer gap-2 items-center">
                 <img className="w-6" src="/lesson.png" />
                 <li><a href="/lesson" className="text-sm xl:text-base">Lesson</a></li>
               </div>
-
               <div className="flex gap-2 items-center">
                 <img className="w-6" src="/task.png" />
                 <li><a href="/" className="text-sm xl:text-base">Task</a></li>
               </div>
             </div>
-
-            {/* SETTING SECTION: Hidden ใน iPad/Phone ตามที่ตกลงกัน และกลับมาใน Laptop */}
+            {/* Setting Section */}
             <div className="hidden xl:flex xl:flex-col xl:gap-8 xl:mt-50">
               <p className="text-[#ACACAC] text-[0.8rem]">SETTING</p>
               <div className="flex gap-2">
                 <img className="w-6" src="/Setting.png" />
                 <li><a href="/">Setting</a></li>
               </div>
-              <div className="flex gap-2 cursor-pointer">
+              <div className="flex gap-2 duration-200 hover:scale-105 cursor-pointer">
                 <img className="w-6" src="/logout.png" />
                 <li>
                   <a className="text-[#E94444] cursor-pointer" onClick={async () => {
@@ -173,8 +165,6 @@ export default function HomePage() {
                 </li>
               </div>
             </div>
-
-            {/* ปุ่ม Logout สำหรับจอเล็ก (เพราะ Setting โดนซ่อนไป) */}
             <div className="xl:hidden flex gap-2 items-center">
               <a className="text-[#E94444] text-sm font-bold" onClick={async () => {
                 await fetch("/api/logout", { method: "POST" });

@@ -29,7 +29,6 @@ export async function POST(req: Request) {
         const formData = await req.formData();
         const title = formData.get("title") as string;
         const bio = formData.get("bio") as string;
-        const more = formData.get("more") as string;
         const type = formData.get("type") as string;
         const coverFile = formData.get("cover") as File;
         const pdfFile = formData.get("pdf") as File;
@@ -92,7 +91,6 @@ export async function POST(req: Request) {
         await db.collection("lessons").insertOne({
             title,
             bio,
-            more,
             type,
             coverUrl: coverUpload.secure_url,
             pdfUrl: optimizedPdfUrl, // ✅ ใช้ Google Docs URL

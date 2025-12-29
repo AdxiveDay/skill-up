@@ -10,9 +10,11 @@ type Lesson = {
     bio: string;
     more: string;
     pdfUrl: string;
-    createdBy: {
-        username: string;
-    };
+    coverUrl: string;
+    visitCount: number;
+    likeCount: number;
+    isLiked: boolean;
+    createdBy: { username: string };
 };
 
 export default function LessonDetailPage() {
@@ -29,13 +31,13 @@ export default function LessonDetailPage() {
             try {
                 setLoading(true);
                 setError(null);
-                
+
                 const res = await fetch(`/api/lesson/${params.id}`);
-                
+
                 if (!res.ok) {
                     throw new Error(`Failed to fetch: ${res.status}`);
                 }
-                
+
                 const data = await res.json();
                 setLesson(data.lesson);
             } catch (err) {
@@ -48,6 +50,47 @@ export default function LessonDetailPage() {
 
         fetchLesson();
     }, [params.id]);
+
+    const handleLike = async () => {
+        if (!lesson) return;
+
+        try {
+            const res = await fetch("/api/lesson/like", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ lessonId: lesson._id }),
+            });
+
+            // ✅ 1. ถ้า Server ตอบกลับไม่สำเร็จ (เช่น 401, 500)
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData.error || "Like failed");
+            }
+
+            const data = await res.json(); // รับ { liked: true/false }
+
+            // ✅ 2. อัปเดต UI ทันที
+            setLesson(prev => {
+                if (!prev) return null;
+                return {
+                    ...prev,
+                    isLiked: data.liked,
+                    likeCount: data.liked ? prev.likeCount + 1 : Math.max(0, prev.likeCount - 1)
+                };
+            });
+
+        } catch (err: any) {
+            console.error("Like Error Details:", err.message);
+
+            // ✅ 3. แจ้งเตือนผู้ใช้ (เช่น ถ้า Token หมดอายุ)
+            if (err.message === "Unauthorized") {
+                alert("กรุณาเข้าสู่ระบบก่อนกด Like ครับ");
+                router.push("/login");
+            } else {
+                alert("ขออภัย ระบบ Like มีปัญหาชั่วคราว");
+            }
+        }
+    };
 
     if (loading) {
         return (
@@ -154,25 +197,42 @@ export default function LessonDetailPage() {
                 </div>
 
                 {/* Right Sidebar */}
-                <div className="w-full xl:w-[220px] mt-8 mb-8 xl:mb-0 xl:mt-30 xl:mr-16">
-                    <div className="w-full p-6 py-4 h-auto xl:h-[269px] bg-white rounded-2xl flex flex-row xl:flex-col justify-between items-center xl:justify-start">
-                        <div className="text-left xl:w-full">
-                            <h1 className="text-gray-400 xl:text-[#333333]">Writter</h1>
+                <div className="w-full xl:w-[220px] mt-8 mb-8 xl:mb-0 xl:mt-20 xl:mr-16">
+                    <img className="w-full h-[130px] object-cover border-white border-4 rounded-2xl mb-6" src={lesson.coverUrl} />
+
+                    {/* สถิติและปุ่ม Like */}
+                    <div className="flex gap-2 mb-4 h-16">
+                        {/* กล่องยอดวิล */}
+                        <div className="flex-1 bg-white rounded-2xl flex flex-col items-center justify-center border border-gray-100">
+                            <span className="text-[10px] text-[#CDCDCD] uppercase font-bold">Visits</span>
+                            <span className="text-lg font-black text-[#A171FF]">{(lesson.visitCount || 0).toLocaleString()}</span>
                         </div>
 
-                        <div className="flex flex-row xl:flex-col items-center gap-4 xl:gap-0">
-                            <img className="w-16 h-16 xl:w-24 xl:h-24 object-cover rounded-full xl:mt-6 xl:mb-4" src="/no-profile.jpg" />
-                            <div className="text-left xl:text-center">
-                                <h1 className="font-bold">{lesson.createdBy.username}</h1>
-                                <p className="text-[#CDCDCD] text-[0.7rem]">{lesson.bio}</p>
+                        {/* ปุ่ม Like */}
+                        <button
+                            onClick={handleLike}
+                            className={`flex-1 rounded-2xl flex flex-col items-center hover:scale-105 duration-200 cursor-pointer justify-center transition-all active:scale-90 border ${lesson.isLiked
+                                ? 'bg-pink-50 border-pink-200 text-pink-500'
+                                : 'bg-white border-gray-100 text-[#CDCDCD] hover:bg-gray-50'
+                                }`}
+                        >
+                            <div className="flex gap-2 items-center">
+                                <img className="w-8 h-8" src="/LIKE.png" />
+                                <div className="flex flex-col items-center">
+                                    <span className="text-[10px] uppercase font-bold">{lesson.isLiked ? 'Liked' : 'Like'}</span>
+                                    <span className="text-lg font-black">{lesson.likeCount || 0}</span>
+                                </div>
                             </div>
-                        </div>
+                        </button>
                     </div>
-                    {lesson.more && (
-                        <h1 className="p-6 break-words bg-white rounded-2xl mt-4 xl:flex hidden text-sm">
-                            {lesson.more}
-                        </h1>
-                    )}
+
+                    {/* ข้อมูลผู้เขียน */}
+                    <div className="w-full p-6 py-5 bg-white rounded-2xl flex flex-col items-center border border-gray-100">
+                        <p className="w-full text-left text-xs text-[#CDCDCD] mb-4 uppercase tracking-wider">Writer</p>
+                        <img className="w-20 h-20 object-cover rounded-full border-4 border-purple-50 mb-3" src="/no-profile.jpg" />
+                        <h1 className="font-semibold text-[#333333] text-base">{lesson.createdBy.username}</h1>
+                        <p className="text-[#CDCDCD] text-[0.7rem] text-center mt-1 leading-relaxed">{lesson.bio}</p>
+                    </div>
                 </div>
             </div>
         </div>

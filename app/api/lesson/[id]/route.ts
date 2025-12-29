@@ -6,9 +6,6 @@ import { cookies } from "next/headers";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-// [id]/route.ts
-// ... (import เดิม)
-
 export async function GET(
   req: Request,
   context: { params: Promise<{ id: string }> }
@@ -25,27 +22,29 @@ export async function GET(
     const db = client.db();
     const lessonId = new ObjectId(id);
 
-    /* ================= VISIT COUNT (Fixed Logic) ================= */
+    /* ================= 1. VISIT COUNT LOGIC ================= */
     const oneMinuteAgo = new Date(Date.now() - 60 * 1000);
 
+    // เช็คว่า User คนนี้เพิ่งดูบทเรียนนี้ไปภายใน 1 นาทีที่ผ่านมาหรือไม่
     const recentView = await db.collection("history").findOne({
       userId: new ObjectId(payload.userId),
       lessonId: lessonId,
-      lastViewedAt: { $gte: oneMinuteAgo } // ดูในช่วง 1 นาทีที่ผ่านมา
+      lastViewedAt: { $gte: oneMinuteAgo }
     });
 
     let lessonData;
 
     if (!recentView) {
-      // 2. ถ้าไม่เคยดู (หรือดูนานแล้ว) -> ให้บวกยอด Visit
+      // ถ้ายังไม่เคยดู หรือดูเกิน 1 นาทีแล้ว -> เพิ่มยอด Visit (+1)
       const result = await db.collection("lessons").findOneAndUpdate(
         { _id: lessonId },
         { $inc: { visitCount: 1 } },
-        { returnDocument: "after" }
+        { returnDocument: "after" } // ดึงข้อมูลหลังอัปเดต
       );
+      // รองรับทั้ง MongoDB Driver เวอร์ชั่นเก่าและใหม่
       lessonData = result?.value || result;
     } else {
-      // 3. ถ้าเพิ่งดูไป -> แค่ดึงข้อมูลมาโชว์เฉยๆ ไม่ต้องบวกยอด
+      // ถ้าเพิ่งดูไป -> ดึงข้อมูลปกติ ไม่ต้องบวกเพิ่ม
       lessonData = await db.collection("lessons").findOne({ _id: lessonId });
     }
 
@@ -53,12 +52,23 @@ export async function GET(
       return NextResponse.json({ error: "Lesson not found" }, { status: 404 });
     }
 
+    /* ================= 2. LIKE & DATA PREPARATION ================= */
+    // ดึงอาเรย์ likes ออกมา (ถ้าไม่มีให้เป็นอาเรย์ว่าง)
+    const likesArray = Array.isArray(lessonData.likes) ? lessonData.likes : [];
+    
+    // เช็คสถานะ Like โดยเปรียบเทียบ ID เป็น String
+    const isLiked = likesArray.some(
+      (uId: any) => uId.toString() === payload.userId.toString()
+    );
+
     const lesson = {
       ...lessonData,
-      visitCount: lessonData.visitCount ?? 1,
+      visitCount: lessonData.visitCount ?? 0,
+      likeCount: likesArray.length,
+      isLiked: isLiked,
     };
 
-    /* ================= SAVE HISTORY ================= */
+    /* ================= 3. SAVE/UPDATE HISTORY ================= */
     await db.collection("history").updateOne(
       {
         userId: new ObjectId(payload.userId),
@@ -73,15 +83,16 @@ export async function GET(
           coverUrl: lesson.coverUrl,
           pdfUrl: lesson.pdfUrl,
           type: lesson.type,
-          lastViewedAt: new Date(),
+          lastViewedAt: new Date(), // อัปเดตเวลาล่าสุดที่เข้าชม
         },
       },
       { upsert: true }
     );
 
     return NextResponse.json({ lesson });
+
   } catch (err) {
-    console.error(err);
+    console.error("GET Lesson Error:", err);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

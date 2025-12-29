@@ -8,7 +8,6 @@ export default function CreateLessonPage() {
 
   const [title, setTitle] = useState("");
   const [bio, setBio] = useState("");
-  const [more, setMore] = useState("");
   const [type, setType] = useState("Physics");
   const [cover, setCover] = useState<File | null>(null);
   const [pdf, setPdf] = useState<File | null>(null);
@@ -24,7 +23,6 @@ export default function CreateLessonPage() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("bio", bio);
-    formData.append("more", more);
     formData.append("type", type);
     formData.append("cover", cover);
     formData.append("pdf", pdf);
@@ -77,17 +75,6 @@ export default function CreateLessonPage() {
           value={bio}
           maxLength={48}
           onChange={(e) => setBio(e.target.value)}
-        />
-      </div>
-
-      <div className="flex flex-col gap-2 w-full max-w-md">
-        <label className="font-semibold">More Experience</label>
-        <textarea
-          className="border p-2 rounded-md"
-          placeholder="Experience (if have)"
-          value={more}
-          maxLength={100}
-          onChange={(e) => setMore(e.target.value)}
         />
       </div>
 

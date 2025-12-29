@@ -274,7 +274,7 @@ export default function HomePage() {
         </div>
 
         {/* 3. Right Sidebar (Profile ขวา) */}
-        <div className="w-full md:w-[30%] xl:w-[324px] py-8 px-4 md:items-start xl:items-start xl:pl-4 gap-12 flex flex-col">
+        <div className="w-full md:w-[30%] sm:mt-8 xl:w-[324px] py-8 px-4 md:items-start xl:items-start xl:pl-4 gap-12 flex flex-col">
           <div className="flex gap-2">
             <img className="rounded-full w-10 h-10" src="no-profile.jpg" />
             <div>

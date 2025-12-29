@@ -269,6 +269,8 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+
+          {filteredHistory.length === 0 && <p className="text-[#ACACAC]">No continue lessons found</p>}
         </div>
 
         {/* 3. Right Sidebar (Profile ขวา) */}

@@ -18,16 +18,38 @@ type Lesson = {
 export default function LessonDetailPage() {
     const params = useParams();
     const [lesson, setLesson] = useState<Lesson | null>(null);
-    const router = useRouter()
-    
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
-        fetch(`/api/lesson/${params.id}`)
-            .then((res) => res.json())
-            .then((data) => setLesson(data.lesson));
+        if (!params.id) return;
+
+        const fetchLesson = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                
+                const res = await fetch(`/api/lesson/${params.id}`);
+                
+                if (!res.ok) {
+                    throw new Error(`Failed to fetch: ${res.status}`);
+                }
+                
+                const data = await res.json();
+                setLesson(data.lesson);
+            } catch (err) {
+                console.error("Fetch error:", err);
+                setError(err instanceof Error ? err.message : "Failed to load lesson");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLesson();
     }, [params.id]);
 
-    if (!lesson) {
+    if (loading) {
         return (
             <div className="bg-[url('/Newppbg.png')] bg-cover bg-center flex justify-center items-center h-screen">
                 <div className="flex flex-col items-center gap-3">
@@ -36,18 +58,45 @@ export default function LessonDetailPage() {
                 </div>
             </div>
         );
-    };
+    }
+
+    if (error) {
+        return (
+            <div className="bg-[url('/Newppbg.png')] bg-cover bg-center flex justify-center items-center h-screen">
+                <div className="flex flex-col items-center gap-3">
+                    <h1 className="text-white font-semibold text-xl">Error</h1>
+                    <p className="text-white">{error}</p>
+                    <button
+                        onClick={() => router.push("/lesson")}
+                        className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                    >
+                        Back to Lessons
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    if (!lesson) {
+        return (
+            <div className="bg-[url('/Newppbg.png')] bg-cover bg-center flex justify-center items-center h-screen">
+                <div className="flex flex-col items-center gap-3">
+                    <h1 className="text-white font-semibold text-xl">Lesson not found</h1>
+                    <button
+                        onClick={() => router.push("/lesson")}
+                        className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                    >
+                        Back to Lessons
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        // Wrapper: ใช้ xl:pl-[345px] ตามเดิมเป๊ะๆ เพื่อให้เนื้อหา Laptop ไม่เบี้ยว
         <div className="bg-[#F1EFF5] min-h-screen font-medium text-[#333333] px-4 xl:px-0 xl:pl-[345px]">
-
             <div className="flex flex-col xl:flex-row justify-between w-full">
-
-                {/* Navbar: 
-                - จอ Laptop (xl): fixed, w-[254px], left-0, top-0, h-screen (เหมือนเดิมทุกประการ)
-                - จอเล็ก: ย้ายมาด้านบน, h-auto, rounded-b-2xl
-            */}
+                {/* Navbar */}
                 <nav className="fixed left-0 top-0 z-50 bg-white w-full h-16 px-6 flex items-center xl:px-0 xl:pl-8 xl:py-2 xl:w-[254px] xl:h-screen xl:block">
                     <ul className="flex flex-row items-center justify-between w-full xl:flex-col xl:items-start xl:justify-start xl:w-auto">
                         <div onClick={() => router.push("/")} className="hidden xl:block cursor-pointer duration-200 hover:scale-105 transition-transform">
@@ -94,16 +143,17 @@ export default function LessonDetailPage() {
                     </ul>
                 </nav>
 
-                {/* Content Area: กลับมาใช้ w-[820px] ในจอ Laptop เหมือนเดิม */}
+                {/* Content Area */}
                 <div className="w-full xl:w-[820px] mt-24 xl:mt-10">
                     <iframe
-                        // src={`${lesson.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
                         src={lesson.pdfUrl}
                         className="w-full h-[60vh] xl:h-[90vh] border rounded-xl bg-white"
+                        title="Lesson PDF"
+                        allowFullScreen
                     />
                 </div>
 
-                {/* Right Sidebar: กลับมาใช้ w-[220px] และ Margin เดิมใน Laptop */}
+                {/* Right Sidebar */}
                 <div className="w-full xl:w-[220px] mt-8 mb-8 xl:mb-0 xl:mt-30 xl:mr-16">
                     <div className="w-full p-6 py-4 h-auto xl:h-[269px] bg-white rounded-2xl flex flex-row xl:flex-col justify-between items-center xl:justify-start">
                         <div className="text-left xl:w-full">

@@ -228,7 +228,7 @@ export default function LessonDetailPage() {
 
                     {/* ข้อมูลผู้เขียน */}
                     <div className="w-full p-6 py-5 bg-white rounded-2xl flex flex-col items-center border border-gray-100">
-                        <p className="w-full text-left text-xs text-[#CDCDCD] mb-4 uppercase tracking-wider">Writer</p>
+                        <p className="w-full text-left text-[#333333] font-semibold mb-4 uppercase tracking-wider">Writer</p>
                         <img className="w-20 h-20 object-cover rounded-full border-4 border-purple-50 mb-3" src="/no-profile.jpg" />
                         <h1 className="font-semibold text-[#333333] text-base">{lesson.createdBy.username}</h1>
                         <p className="text-[#CDCDCD] text-[0.7rem] text-center mt-1 leading-relaxed">{lesson.bio}</p>

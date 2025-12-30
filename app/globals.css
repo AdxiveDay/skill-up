@@ -8,6 +8,9 @@ body {
 
 html,
 body {
+
+  background-color: #F1EFF5;
+  
   overflow: auto;
   /* ให้เลื่อนได้ */
   -ms-overflow-style: none;

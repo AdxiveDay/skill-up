@@ -90,7 +90,7 @@ export default function FriendRequestCard({ onRequestAccepted }: FriendRequestCa
           <div className="flex gap-2 mt-3">
             <button
               onClick={() => acceptFriend(req._id)}
-              className="flex-1 bg-[#8955EF] text-white py-2 rounded-full hover:bg-[#7644d9] transition-colors"
+              className="flex-1 bg-[#8955EF] cursor-pointer duration-200 hover:scale-105 text-white py-2 rounded-full hover:bg-[#7644d9] transition-colors"
             >
               Accept
             </button>
@@ -98,7 +98,7 @@ export default function FriendRequestCard({ onRequestAccepted }: FriendRequestCa
               onClick={() =>
                 setRequests((prev) => prev.filter((r) => r._id !== req._id))
               }
-              className="flex-1 bg-gray-200 text-gray-600 py-2 rounded-full hover:bg-gray-300 transition-colors"
+              className="flex-1 bg-gray-200 cursor-pointer duration-200 hover:scale-105 text-gray-600 py-2 rounded-full hover:bg-gray-300 transition-colors"
             >
               Reject
             </button>

@@ -118,14 +118,14 @@ export default function AddFriendPage() {
         </nav>
 
         {/* Main Content */}
-        <div className="flex flex-col w-[90%] md:max-w-[700px] xl:max-w-none xl:w-[90%] h-full mt-10 mx-auto xl:mx-0 xl:px-10">
+        <div className="flex flex-col w-[90%] md:max-w-[700px] xl:max-w-none xl:w-[90%] h-full mt-10 mx-auto xl:mx-0">
 
           {/* Header Section: Title + Search Bar
               - ปรับเป็น flex-col ในมือถือ และ flex-row ใน iPad/Laptop
           */}
           <div className="flex flex-col md:flex-row items-start md:items-center w-full xl:pr-15 mb-10 justify-between gap-6 md:gap-0">
             <div>
-              <h1 className="text-3xl font-bold">Add Friend</h1>
+              <h1 className="text-3xl font-semibold">Add Friend</h1>
               <h1 className="mt-2 text-[#CDCDCD]">Find your friends</h1>
             </div>
 
@@ -152,7 +152,7 @@ export default function AddFriendPage() {
           <div className="flex flex-col items-center mt-4 w-full">
             {users.length === 0 && keyword && !loading && (
               <div className="text-center py-16">
-                <p className="text-[#ACACAC] text-lg">No users found matching "{keyword}"</p>
+                <p className="text-[#ACACAC] font-medium text-lg">No users found matching "{keyword}"</p>
               </div>
             )}
 

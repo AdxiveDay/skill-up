@@ -365,12 +365,13 @@ export default function HomePage() {
             ))}
 
             {/* Add friend button */}
-            <div
-              onClick={() => router.push("/addfriend")}
-              className="w-[80%] h-12 rounded-full duration-200 hover:scale-105 transition-transform cursor-pointer flex items-center px-3.5 justify-between bg-[#eeeeee] mt-6"
-            >
-              <img src="/plus.png" className="bg-[#8955EF] w-8 h-8 p-2 rounded-full" />
-              <h1 className="text-[#333333]">Add friend</h1>
+            <div className="w-full flex flex-col items-center">
+              <div
+                onClick={() => router.push("/addfriend")}
+                className="h-12 rounded-full gap-3 duration-200 hover:scale-105 transition-transform cursor-pointer flex items-center px-3.5 justify-between bg-[#eeeeee] mt-6">
+                <img src="/plus.png" className="bg-[#8955EF] w-8 h-8 p-2 rounded-full" />
+                <h1 className="text-[#333333]">Add friend</h1>
+              </div>
             </div>
 
           </div>

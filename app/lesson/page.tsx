@@ -96,30 +96,30 @@ export default function LessonPage() {
             - แก้ไขปุ่ม Search ไม่ให้ชิดขอบ Laptop เกินไปโดยใช้ xl:pr-24 ตามโค้ดเดิมคุณ
         */}
           <div className="flex flex-col gap-4 md:flex-row md:justify-between w-[90%] xl:w-full xl:pr-30 items-center">
-            <h1 className="font-semibold text-3xl">Lessons</h1>
+            <div className="flex flex-col">
+              <h1 className="font-semibold text-3xl">Lessons</h1>
+              <select
+                className="mt-4 text-[0.7rem] bg-[#E8DCFF] outline-none focus:ring-2 focus:ring-[#E4DCF4] transition-all rounded-md p-1 mb-8"
+                onChange={(e) => setType(e.target.value)}
+              >
+                <option value="All">All</option>
+                <option value="Physics">Physics</option>
+                <option value="Math">Math</option>
+                <option value="Bio">Biology</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="History">History</option>
+              </select>
+            </div>
             <input
               placeholder="Find your lesson.."
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="outline-none focus:ring-2 focus:ring-[#E4DCF4] transition-all flex bg-white border-2 border-[#EEE8F8] rounded-full p-2 px-7 w-full md:w-[300px] xl:w-[35%]"
+              className="outline-none focus:ring-2 focus:ring-[#E4DCF4] mb-8 transition-all flex bg-white border-2 border-[#EEE8F8] rounded-full p-2 px-7 w-full md:w-[300px] xl:w-[35%]"
             />
           </div>
 
           {/* Category Selector */}
-          <div className="w-[90%] xl:w-full flex justify-start">
-            <select
-              className="mt-4 text-[0.7rem] mb-10 bg-[#E8DCFF] outline-none focus:ring-2 focus:ring-[#E4DCF4] transition-all rounded-md p-1"
-              onChange={(e) => setType(e.target.value)}
-            >
-              <option value="All">All</option>
-              <option value="Physics">Physics</option>
-              <option value="Math">Math</option>
-              <option value="Bio">Biology</option>
-              <option value="Chemistry">Chemistry</option>
-              <option value="History">History</option>
-            </select>
-          </div>
 
           {/* Grid Lessons
             - ใช้ justify-center ใน md เพื่อให้การ์ดอยู่กลางหน้าจอ iPad

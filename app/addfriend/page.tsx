@@ -124,7 +124,7 @@ export default function AddFriendPage() {
               - ปรับเป็น flex-col ในมือถือ และ flex-row ใน iPad/Laptop
           */}
           <div className="flex flex-col md:flex-row items-start md:items-center w-full xl:pr-15 mb-10 justify-between gap-6 md:gap-0">
-            <div>
+            <div className="w-full flex flex-col items-center xl:items-start">
               <h1 className="text-3xl font-semibold">Add Friend</h1>
               <h1 className="mt-2 text-[#CDCDCD]">Find your friends</h1>
             </div>

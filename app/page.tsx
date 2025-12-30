@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import FriendRequestCard from "./components/FriendRequestCard";
 
 type User = {
   _id: string;
@@ -29,7 +30,11 @@ type HistoryItem = {
   };
 };
 
-
+type Friend = {
+  _id: string;
+  username: string;
+  level: number;
+}
 
 export default function HomePage() {
   const [user, setUser] = useState<User | null>(null);
@@ -37,6 +42,8 @@ export default function HomePage() {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [friends, setFriends] = useState<Friend[]>([]);
 
   const [stats, setStats] = useState({
     memberCount: 0,
@@ -125,6 +132,32 @@ export default function HomePage() {
     fetchMe();
   }, [router]);
 
+  useEffect(() => {
+    fetchFriends();
+  }, []);
+
+  async function fetchFriends() {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const res = await fetch("/api/friend/list");
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Failed to load friends");
+        return;
+      }
+
+      setFriends(data.friends || []);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to load friends");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   if (loading) {
     return (
       <div className="bg-[url('/Newppbg.png')] bg-cover bg-center flex justify-center items-center h-screen">
@@ -141,7 +174,8 @@ export default function HomePage() {
   }
 
   return (
-    <div className="bg-[#F1EFF5] min-h-screen font-medium text-[#333333] xl:pl-[360px] pt-[80px] xl:pt-0">
+    <div className="relative bg-[#F1EFF5] min-h-screen font-medium text-[#333333] xl:pl-[360px] pt-[80px] xl:pt-0">
+
       <div className="flex flex-col md:flex-row justify-between w-full">
 
         {/* 1. Navbar (Top on Mobile/iPad, Left on Laptop) */}
@@ -301,19 +335,47 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="bg-white p-6 py-4 rounded-3xl w-full xl:w-[80%]">
-            <h1 className="mb-4 font-bold">Friend</h1>
-            {/* รายชื่อเพื่อน... */}
-            <div className="flex mt-4 gap-2">
-              <img className="rounded-full w-10 h-10" src="no-profile.jpg" />
-              <div className="flex flex-col">
-                <h1 className="text-sm">Kru P. Sprite</h1>
-                <h1 className="text-[#CDCDCD] text-[0.7rem]">0</h1>
-              </div>
-            </div>
-          </div>
-        </div>
+          <div className="bg-white p-6 pt-4 pb-8 rounded-3xl w-full xl:w-[80%]">
+            <h1 className="mb-6 font-bold">Friend</h1>
 
+            {/* Error message */}
+            {error && (
+              <div className="text-red-500 text-sm mb-4">
+                {error}
+              </div>
+            )}
+
+            {/* Loading state */}
+            {loading && (
+              <div className="text-gray-400">Loading friends...</div>
+            )}
+
+            {friends.map((friend) => (
+              <div key={friend._id} className="flex mt-4 gap-2">
+                <img
+                  className="rounded-full w-10 h-10 object-cover"
+                  src="/no-profile.jpg"
+                  alt={friend.username}
+                />
+                <div className="flex flex-col">
+                  <h1 className="text-sm">{friend.username}</h1>
+                  <h1 className="text-[#CDCDCD] text-[0.7rem]">Level {friend.level}</h1>
+                </div>
+              </div>
+            ))}
+
+            {/* Add friend button */}
+            <div
+              onClick={() => router.push("/addfriend")}
+              className="w-[80%] h-12 rounded-full duration-200 hover:scale-105 transition-transform cursor-pointer flex items-center px-3.5 justify-between bg-[#eeeeee] mt-6"
+            >
+              <img src="/plus.png" className="bg-[#8955EF] w-8 h-8 p-2 rounded-full" />
+              <h1 className="text-[#333333]">Add friend</h1>
+            </div>
+
+          </div>
+          <FriendRequestCard onRequestAccepted={() => fetchFriends()} />
+        </div>
       </div>
     </div>
   );

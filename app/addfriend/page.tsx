@@ -159,7 +159,7 @@ export default function AddFriendPage() {
             {users.map((u) => (
               <div
                 key={u._id}
-                className="bg-white rounded-2xl p-4 w-full mb-4 flex justify-between items-center hover:shadow-md transition-all duration-200 hover:scale-[1.01]"
+                className="bg-white rounded-2xl p-4 w-full mb-4 flex justify-between items-center"
               >
                 {/* Profile Info: ปรับขนาดตัวอักษรให้พอดีแต่ละจอ */}
                 <div className="flex items-center gap-3 flex-1 overflow-hidden">

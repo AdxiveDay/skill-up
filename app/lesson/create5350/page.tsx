@@ -9,11 +9,18 @@ export default function CreateLessonPage() {
   const [title, setTitle] = useState("");
   const [bio, setBio] = useState("");
   const [type, setType] = useState("Physics");
+  const [password, setPassword] = useState(""); // ✅ รหัสผ่าน
   const [cover, setCover] = useState<File | null>(null);
   const [pdf, setPdf] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
+    // ✅ เช็ครหัสผ่าน
+    if (!password) {
+      alert("กรุณาใส่รหัสผ่าน");
+      return;
+    }
+
     // เช็คข้อมูลเบื้องต้น
     if (!title || !cover || !pdf) {
       alert("กรุณากรอกชื่อบทเรียนและอัปโหลดไฟล์ให้ครบครับ");
@@ -24,6 +31,7 @@ export default function CreateLessonPage() {
     formData.append("title", title);
     formData.append("bio", bio);
     formData.append("type", type);
+    formData.append("password", password); // ✅ เพิ่ม password
     formData.append("cover", cover);
     formData.append("pdf", pdf);
 
@@ -40,7 +48,7 @@ export default function CreateLessonPage() {
       if (res.ok) {
         alert("สร้างบทเรียนสำเร็จ!");
         router.push("/lesson");
-        router.refresh(); // บังคับให้หน้า lesson อัปเดตข้อมูลใหม่
+        router.refresh();
       } else {
         alert(data.error || "เกิดข้อผิดพลาดบางอย่าง");
       }
@@ -87,6 +95,18 @@ export default function CreateLessonPage() {
           <option value="Chem">Chem</option>
           <option value="History">History</option>
         </select>
+      </div>
+
+      {/* ✅ Password Input */}
+      <div className="flex flex-col gap-2 w-full max-w-md">
+        <label className="font-semibold">Password</label>
+        <input
+          className="border p-2 rounded-md"
+          type="password"
+          placeholder="Enter password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
 
       <div className="flex flex-col gap-2 w-full max-w-md bg-white p-4 rounded-lg border shadow-sm">

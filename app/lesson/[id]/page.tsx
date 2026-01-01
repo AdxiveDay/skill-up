@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import QuizModal from "@/app/components/QuizModal"
 
 type Lesson = {
     _id: string;
@@ -23,6 +24,8 @@ export default function LessonDetailPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const [showQuiz, setShowQuiz] = useState(false);
+    const [quizSet, setQuizSet] = useState<any>(null);
 
     useEffect(() => {
         if (!params.id) return;
@@ -40,6 +43,40 @@ export default function LessonDetailPage() {
 
                 const data = await res.json();
                 setLesson(data.lesson);
+            } catch (err) {
+                console.error("Fetch error:", err);
+                setError(err instanceof Error ? err.message : "Failed to load lesson");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchLesson();
+    }, [params.id]);
+
+    useEffect(() => {
+        if (!params.id) return;
+
+        const fetchLesson = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+
+                const res = await fetch(`/api/lesson/${params.id}`);
+
+                if (!res.ok) {
+                    throw new Error(`Failed to fetch: ${res.status}`);
+                }
+
+                const data = await res.json();
+                setLesson(data.lesson);
+
+                // ✅ ดึง Quiz Set
+                const quizRes = await fetch(`/api/quiz/list?lessonId=${params.id}`);
+                const quizData = await quizRes.json();
+                if (quizData.quizzes && quizData.quizzes.length > 0) {
+                    setQuizSet(quizData.quizzes[0]);
+                }
             } catch (err) {
                 console.error("Fetch error:", err);
                 setError(err instanceof Error ? err.message : "Failed to load lesson");
@@ -138,7 +175,19 @@ export default function LessonDetailPage() {
 
     return (
         <div className="bg-[#F1EFF5] min-h-screen font-medium text-[#333333] px-4 xl:px-0 xl:pl-[345px]">
+            
+            {showQuiz && quizSet && (
+                    <QuizModal
+                        quizSet={quizSet}
+                        onClose={() => setShowQuiz(false)}
+                        onQuizComplete={() => { }}
+                    />
+                )}
+            
             <div className="flex flex-col xl:flex-row justify-between w-full">
+
+                {/* Quiz ขึ้นเป็น Component แบบ fixed ลอย และเมื่อ Quiz ขึ้น ให้ตรงนี้ ให้มี bg อีกชั้นนึงเป็นสีดำ Opacity 50% เหมือนให้ filter พื้นหลังดำๆไว้ */}
+
                 {/* Navbar */}
                 <nav className="fixed left-0 top-0 z-50 bg-white w-full h-16 px-6 flex items-center xl:px-0 xl:pl-8 xl:py-2 xl:w-[254px] xl:h-screen xl:block">
                     <ul className="flex flex-row items-center justify-between w-full xl:flex-col xl:items-start xl:justify-start xl:w-auto">
@@ -233,6 +282,17 @@ export default function LessonDetailPage() {
                         <h1 className="font-semibold text-[#333333] text-base">{lesson.createdBy.username}</h1>
                         <p className="text-[#CDCDCD] text-[0.7rem] text-center mt-1 leading-relaxed">{lesson.bio}</p>
                     </div>
+
+                    {quizSet && (
+                        <button
+                            onClick={() => setShowQuiz(true)}
+                            className="w-full bg-[#8955EF] text-white py-3 rounded-3xl cursor-pointer duration-200 hover:scale-105 transition-transform font-semibold mt-6"
+                        >
+                            Take Quiz ({quizSet.questions?.length || 0} questions)
+                        </button>
+                    )}
+
+
                 </div>
             </div>
         </div>

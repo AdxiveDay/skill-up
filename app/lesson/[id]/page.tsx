@@ -175,20 +175,17 @@ export default function LessonDetailPage() {
 
     return (
         <div className="bg-[#F1EFF5] min-h-screen font-medium text-[#333333] px-4 xl:px-0 xl:pl-[345px]">
-            
+
             {showQuiz && quizSet && (
-                    <QuizModal
-                        quizSet={quizSet}
-                        onClose={() => setShowQuiz(false)}
-                        onQuizComplete={() => { }}
-                    />
-                )}
-            
+                <QuizModal
+                    quizSet={quizSet}
+                    onClose={() => setShowQuiz(false)}
+                    onQuizComplete={() => { }}
+                />
+            )}
+
             <div className="flex flex-col xl:flex-row justify-between w-full">
 
-                {/* Quiz ขึ้นเป็น Component แบบ fixed ลอย และเมื่อ Quiz ขึ้น ให้ตรงนี้ ให้มี bg อีกชั้นนึงเป็นสีดำ Opacity 50% เหมือนให้ filter พื้นหลังดำๆไว้ */}
-
-                {/* Navbar */}
                 <nav className="fixed left-0 top-0 z-50 bg-white w-full h-16 px-6 flex items-center xl:px-0 xl:pl-8 xl:py-2 xl:w-[254px] xl:h-screen xl:block">
                     <ul className="flex flex-row items-center justify-between w-full xl:flex-col xl:items-start xl:justify-start xl:w-auto">
                         <div onClick={() => router.push("/")} className="hidden xl:block cursor-pointer duration-200 hover:scale-105 transition-transform">
@@ -209,7 +206,7 @@ export default function LessonDetailPage() {
                                 <li><a href="/" className="text-sm xl:text-base">Task</a></li>
                             </div>
                         </div>
-                        {/* Setting Section */}
+
                         <div className="hidden xl:flex xl:flex-col xl:gap-8 xl:mt-50">
                             <p className="text-[#ACACAC] text-[0.8rem]">SETTING</p>
                             <div className="flex gap-2">
@@ -235,29 +232,25 @@ export default function LessonDetailPage() {
                     </ul>
                 </nav>
 
-                {/* Content Area */}
                 <div className="w-full xl:w-[820px] mt-24 xl:mt-10">
                     <iframe
-                        src={lesson.pdfUrl}
+                        src={lesson.pdfUrl + "#toolbar=0"} 
+                        sandbox="allow-scripts allow-same-origin" 
                         className="w-full h-[60vh] xl:h-[90vh] border rounded-xl bg-white"
                         title="Lesson PDF"
-                        allowFullScreen
                     />
                 </div>
 
-                {/* Right Sidebar */}
                 <div className="w-full xl:w-[220px] mt-8 mb-8 xl:mb-0 xl:mt-20 xl:mr-16">
                     <img className="w-full h-[130px] object-cover border-white border-4 rounded-2xl mb-6" src={lesson.coverUrl} />
 
-                    {/* สถิติและปุ่ม Like */}
                     <div className="flex gap-2 mb-4 h-16">
-                        {/* กล่องยอดวิล */}
+
                         <div className="flex-1 bg-white rounded-2xl flex flex-col items-center justify-center border border-gray-100">
                             <span className="text-[10px] text-[#CDCDCD] uppercase font-bold">Visits</span>
                             <span className="text-lg font-black text-[#A171FF]">{(lesson.visitCount || 0).toLocaleString()}</span>
                         </div>
 
-                        {/* ปุ่ม Like */}
                         <button
                             onClick={handleLike}
                             className={`flex-1 rounded-2xl flex flex-col items-center hover:scale-105 duration-200 cursor-pointer justify-center transition-all active:scale-90 border ${lesson.isLiked
@@ -275,7 +268,6 @@ export default function LessonDetailPage() {
                         </button>
                     </div>
 
-                    {/* ข้อมูลผู้เขียน */}
                     <div className="w-full p-6 py-5 bg-white rounded-2xl flex flex-col items-center border border-gray-100">
                         <p className="w-full text-left text-[#333333] font-semibold mb-4 uppercase tracking-wider">Writer</p>
                         <img className="w-20 h-20 object-cover rounded-full border-4 border-purple-50 mb-3" src="/no-profile.jpg" />

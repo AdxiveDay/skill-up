@@ -84,7 +84,7 @@ export default function RegisterPage() {
                             <h1 className="text-[#B6B6B6] text-left">Email:</h1>
                         </div>
                         <input
-                            type="email"              // ✅ email ต้องเป็น type=email
+                            type="email"              
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-[80%] border-2 border-[#E4DCF4] rounded-md p-1.5 px-1 outline-none focus:ring-2 focus:ring-[#E4DCF4] transition-all"
@@ -109,7 +109,7 @@ export default function RegisterPage() {
                             <h1 className="text-[#B6B6B6] text-left">Password:</h1>
                         </div>
                         <input
-                            type="password"           // ✅ password ถึงจะ censor
+                            type="password"           
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="w-[80%] border-2 border-[#E4DCF4] rounded-md p-1.5 px-1 outline-none focus:ring-2 focus:ring-[#E4DCF4] transition-all"
@@ -121,7 +121,7 @@ export default function RegisterPage() {
                             <h1 className="text-[#B6B6B6] text-left">Confirm Password:</h1>
                         </div>
                         <input
-                            type="password"           // ✅ confirm password
+                            type="password"          
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className="w-[80%] border-2 border-[#E4DCF4] rounded-md p-1.5 px-1 outline-none focus:ring-2 focus:ring-[#E4DCF4] transition-all"

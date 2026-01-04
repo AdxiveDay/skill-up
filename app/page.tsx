@@ -178,7 +178,6 @@ export default function HomePage() {
 
       <div className="flex flex-col md:flex-row justify-between w-full">
 
-        {/* 1. Navbar (Top on Mobile/iPad, Left on Laptop) */}
         <nav className="fixed left-0 top-0 z-50 bg-white w-full h-16 px-6 flex items-center xl:px-0 xl:pl-8 xl:py-2 xl:w-[254px] xl:h-screen xl:block">
           <ul className="flex flex-row items-center justify-between w-full xl:flex-col xl:items-start xl:justify-start xl:w-auto">
             <div onClick={() => router.push("/")} className="hidden xl:block cursor-pointer duration-200 hover:scale-105 transition-transform">
@@ -199,7 +198,7 @@ export default function HomePage() {
                 <li><a href="/" className="text-sm xl:text-base">Task</a></li>
               </div>
             </div>
-            {/* Setting Section */}
+            
             <div className="hidden xl:flex xl:flex-col xl:gap-8 xl:mt-50">
               <p className="text-[#ACACAC] text-[0.8rem]">SETTING</p>
               <div className="flex gap-2">
@@ -225,7 +224,6 @@ export default function HomePage() {
           </ul>
         </nav>
 
-        {/* 2. Middle Content (Banner ซ้าย) */}
         <div className="w-full px-4 md:w-[65%] md:ml-5 xl:w-[739px] mt-8 flex flex-col items-center">
           <input
             placeholder="Find your lesson.."
@@ -245,7 +243,6 @@ export default function HomePage() {
 
           <div className="flex flex-col md:flex-row gap-4 md:gap-3 xl:gap-6 mt-4 w-full md:w-auto">
 
-            {/* Member Card */}
             <div className="bg-white items-center p-4 gap-4 flex w-full md:w-[180px] xl:w-[220px] h-[90px] md:h-[100px] rounded-3xl">
               <div className="bg-[#F0E9FD] w-[45px] h-[45px] xl:w-[57px] xl:h-[57px] flex shrink-0 rounded-full items-center justify-center">
                 <img className="w-5 xl:w-8" src="/member.png" />
@@ -256,7 +253,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Lesson Card */}
             <div className="bg-white items-center p-4 gap-4 flex w-full md:w-[180px] xl:w-[220px] h-[90px] md:h-[100px] rounded-3xl">
               <div className="bg-[#F0E9FD] w-[45px] h-[45px] xl:w-[57px] xl:h-[57px] flex shrink-0 rounded-full items-center justify-center">
                 <img className="w-5 xl:w-8" src="/lessons.png" />
@@ -267,7 +263,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Subject Card */}
             <div className="bg-white items-center p-4 gap-4 flex w-full md:w-[180px] xl:w-[220px] h-[90px] md:h-[100px] rounded-3xl">
               <div className="bg-[#F0E9FD] w-[45px] h-[45px] xl:w-[57px] xl:h-[57px] flex shrink-0 rounded-full items-center justify-center">
                 <img className="w-5 xl:w-8" src="/fulter.png" />
@@ -307,7 +302,6 @@ export default function HomePage() {
           {filteredHistory.length === 0 && <p className="text-[#ACACAC]">No continue lessons found</p>}
         </div>
 
-        {/* 3. Right Sidebar (Profile ขวา) */}
         <div className="w-full md:w-[30%] sm:mt-8 xl:w-[324px] py-8 px-4 md:items-start xl:items-start xl:pl-4 gap-12 flex flex-col">
           <div className="flex gap-2">
             <img className="rounded-full w-10 h-10" src="no-profile.jpg" />
@@ -317,7 +311,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* กู้คืนระบบ Level & EXP */}
           <div className="bg-white p-6 py-4 rounded-3xl w-full xl:w-[80%]">
             <h1>Profile</h1>
             <div className="flex flex-col gap-2 my-[1.25rem] items-center text-center">
@@ -338,14 +331,12 @@ export default function HomePage() {
           <div className="bg-white p-6 pt-4 pb-8 rounded-3xl w-full xl:w-[80%]">
             <h1 className="mb-6 font-bold">Friend</h1>
 
-            {/* Error message */}
             {error && (
               <div className="text-red-500 text-sm mb-4">
                 {error}
               </div>
             )}
 
-            {/* Loading state */}
             {loading && (
               <div className="text-gray-400">Loading friends...</div>
             )}
@@ -364,7 +355,6 @@ export default function HomePage() {
               </div>
             ))}
 
-            {/* Add friend button */}
             <div className="w-full flex flex-col items-center">
               <div
                 onClick={() => router.push("/addfriend")}

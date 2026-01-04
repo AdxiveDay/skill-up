@@ -54,9 +54,7 @@ export default function LoginPage() {
 
   return (
     <div className="bg-[url('/Newppbg.png')] bg-cover bg-center flex justify-center items-center h-screen px-4">
-      {/* ปรับ w-full max-w-[414px] หรือใช้ w-[90%] 
-         เพื่อให้ในมือถือกล่องยืดหยุ่นตามหน้าจอ แต่ไม่เกิน 414px 
-      */}
+
       <div className="bg-white rounded-3xl w-[370px] md:w-[414px] h-auto min-h-[480px] pb-10 shadow-lg">
 
         <div className="flex pt-10 flex-col gap-3 items-center">

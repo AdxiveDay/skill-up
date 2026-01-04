@@ -97,7 +97,6 @@ export default function CreateLessonPage() {
         </select>
       </div>
 
-      {/* ✅ Password Input */}
       <div className="flex flex-col gap-2 w-full max-w-md">
         <label className="font-semibold">Password</label>
         <input

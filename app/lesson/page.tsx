@@ -39,7 +39,7 @@ export default function LessonPage() {
   return (
     <div className="bg-[#F1EFF5] min-h-screen font-medium text-[#333333] xl:pl-[324px] pt-[80px] xl:pt-0">
       <div className="flex flex-col xl:flex-row w-full">
-        {/* 1. Navbar (คงเดิม) */}
+        
         <nav className="fixed left-0 top-0 z-50 bg-white w-full h-16 px-6 flex items-center xl:px-0 xl:pl-8 xl:py-2 xl:w-[254px] xl:h-screen xl:block">
           <ul className="flex flex-row items-center justify-between w-full xl:flex-col xl:items-start xl:justify-start xl:w-auto">
             <div onClick={() => router.push("/")} className="hidden xl:block cursor-pointer duration-200 hover:scale-105 transition-transform">
@@ -60,7 +60,7 @@ export default function LessonPage() {
                 <li><a href="/" className="text-sm xl:text-base">Task</a></li>
               </div>
             </div>
-            {/* Setting Section */}
+            
             <div className="hidden xl:flex xl:flex-col xl:gap-8 xl:mt-50">
               <p className="text-[#ACACAC] text-[0.8rem]">SETTING</p>
               <div className="flex gap-2">
@@ -86,15 +86,9 @@ export default function LessonPage() {
           </ul>
         </nav>
 
-        {/* 2. Content Section
-          - iPad (md): mx-auto และ max-w จะทำให้มันอยู่ตรงกลางพอดี
-          - Laptop (xl): mx-0 และ w-[1200px] กลับไปที่เดิม
-      */}
+
         <div className="w-full max-w-full md:max-w-[700px] lg:max-w-[900px] xl:max-w-none xl:w-[1200px] mt-8 flex flex-col items-center md:mx-auto xl:mx-0 xl:items-start">
 
-          {/* Header: Title + Search 
-            - แก้ไขปุ่ม Search ไม่ให้ชิดขอบ Laptop เกินไปโดยใช้ xl:pr-24 ตามโค้ดเดิมคุณ
-        */}
           <div className="flex flex-col gap-4 md:flex-row md:justify-between w-[90%] xl:w-full xl:pr-30 items-center">
             <div className="flex flex-col">
               <h1 className="font-semibold text-3xl">Lessons</h1>
@@ -119,11 +113,6 @@ export default function LessonPage() {
             />
           </div>
 
-          {/* Category Selector */}
-
-          {/* Grid Lessons
-            - ใช้ justify-center ใน md เพื่อให้การ์ดอยู่กลางหน้าจอ iPad
-        */}
           <div className="w-full flex justify-center xl:justify-start">
             <div className="w-[90%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 xl:gap-12 mb-12">
               {filteredLessons.map((lesson) => (
@@ -142,7 +131,7 @@ export default function LessonPage() {
                         <h1 className="text-sm font-bold">{lesson.createdBy.username}</h1>
                         <h1 className="text-[#CDCDCD] text-[0.7rem] line-clamp-1">{lesson.bio}</h1>
                       </div>
-                      {/* ส่วนใส่ จำนวนเข้าชม */}
+
                       <h1 className="text-[0.7rem] text-[#CDCDCD] mr-2">{(lesson.visitCount ?? 0).toLocaleString()} visits</h1>
                     </div>
                   </div>

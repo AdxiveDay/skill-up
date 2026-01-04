@@ -1,11 +1,7 @@
+import type { NextConfig } from "next";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  api: {
-    bodyParser: {
-      sizeLimit: '100mb', // เปลี่ยนจาก default 1mb เป็น 100mb
-    },
-  },
+const nextConfig: NextConfig = {
+  /* config options here */
 };
 
-module.exports = nextConfig;
+export default nextConfig;
